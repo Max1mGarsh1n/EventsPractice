@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -19,6 +20,12 @@ public class EventService {
         Event event = new Event(req.title, req.description, req.dateTime);
         events.add(event);
         return event;
+    }
+
+    public Optional<Event> getById(String id) {
+        return events.stream()
+                .filter(e -> e.getId().toString().equals(id))
+                .findFirst();
     }
 
     public boolean delete(String id) {
