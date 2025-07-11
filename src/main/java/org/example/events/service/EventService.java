@@ -19,7 +19,7 @@ public class EventService {
 
     public Event create(EventRequest req) {
         Event event = new Event(req.getTitle(), req.getDescription(), req.getDateTime());
-        event.setId(++lastId); // Инкрементируем ID
+        event.setId(++lastId);
         events.add(event);
         return event;
     }
