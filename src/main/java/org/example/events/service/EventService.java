@@ -11,24 +11,26 @@ import java.util.Optional;
 @Service
 public class EventService {
     private final List<Event> events = new ArrayList<>();
+    private Long lastId = 0L;
 
     public List<Event> getAll() {
-        return events;
+        return new ArrayList<>(events);
     }
 
     public Event create(EventRequest req) {
-        Event event = new Event(req.title, req.description, req.dateTime);
+        Event event = new Event(req.getTitle(), req.getDescription(), req.getDateTime());
+        event.setId(++lastId); // Инкрементируем ID
         events.add(event);
         return event;
     }
 
-    public Optional<Event> getById(String id) {
+    public Optional<Event> getById(Long id) {
         return events.stream()
-                .filter(e -> e.getId().toString().equals(id))
+                .filter(e -> e.getId().equals(id))
                 .findFirst();
     }
 
-    public boolean delete(String id) {
+    public boolean delete(Long id) {
         return events.removeIf(e -> e.getId().equals(id));
     }
 }
