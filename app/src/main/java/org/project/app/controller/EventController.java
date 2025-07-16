@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.project.core.dto.EventRequest;
 import org.project.core.entity.Event;
 import org.project.core.service.EventService;
+import org.project.core.util.EventUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,6 +47,30 @@ public class EventController {
         log.info("Creating new event: {}", req.getTitle());
         Event createdEvent = eventService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
+    }
+
+    @GetMapping("/future")
+    public List<Event> getFutureEvents() {
+        log.info("Fetching future events");
+        return eventService.getFutureEvents();
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<String> validateEvent(@RequestBody EventRequest req) {
+        log.info("Validating event: {}", req.getTitle());
+        try {
+            Event event = new Event(req.getTitle(), req.getDescription(), req.getDateTime());
+            if (!EventUtils.isValidTitle(event)) {
+                return ResponseEntity.badRequest().body("Invalid event title");
+            }
+            if (!EventUtils.isFutureEvent(event)) {
+                return ResponseEntity.badRequest().body("Event date must be in the future");
+            }
+            return ResponseEntity.ok("Event is valid");
+        } catch (Exception e) {
+            log.error("Validation error", e);
+            return ResponseEntity.internalServerError().body("Validation failed");
+        }
     }
 
     @DeleteMapping("/{id}")
