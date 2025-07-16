@@ -1,4 +1,4 @@
-package org.example.events.dto;
+package org.project.core.dto;
 
 import lombok.Data;
 
