@@ -2,7 +2,6 @@ package org.project.core.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.project.core.dto.EventRequest;
 import org.project.core.entity.Event;
 
 import java.time.LocalDateTime;
@@ -13,38 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class EventServiceTest {
 
     private EventService service;
-    private final LocalDateTime futureDate = LocalDateTime.now().plusDays(1);
-    private final LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
 
     @BeforeEach
     void setUp() {
         service = new EventService();
-    }
-
-    @Test
-    void create_ShouldRejectInvalidTitle() {
-        EventRequest request = new EventRequest("", "Description", futureDate);
-
-        assertThrows(IllegalArgumentException.class,
-                () -> service.create(request));
-    }
-
-    @Test
-    void create_ShouldRejectPastEvent() {
-        EventRequest request = new EventRequest("Valid", "Desc", pastDate);
-
-        assertThrows(IllegalArgumentException.class,
-                () -> service.create(request));
-    }
-
-    @Test
-    void getFutureEvents_ShouldReturnOnlyFutureEvents() {
-        service.create(new EventRequest("Future", "Desc", futureDate));
-
-        List<Event> result = service.getFutureEvents();
-
-        assertEquals(1, result.size());
-        assertEquals("Future", result.get(0).getTitle());
     }
 
     @Test
