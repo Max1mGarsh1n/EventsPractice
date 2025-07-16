@@ -1,4 +1,4 @@
-package org.example.events.entity;
+package org.project.core.entity;
 
 import lombok.Data;
 

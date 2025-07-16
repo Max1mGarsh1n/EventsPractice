@@ -1,7 +1,7 @@
-package org.example.events.service;
+package org.project.core.service;
 
-import org.example.events.dto.EventRequest;
-import org.example.events.entity.Event;
+import org.project.core.dto.EventRequest;
+import org.project.core.entity.Event;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
