@@ -1,9 +1,9 @@
-package org.example.events;
+package org.project.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.project")
 public class EventsApplication {
     /*
         Разработать REST API для управления событиями (мероприятиями) с возможностью:
